@@ -1,5 +1,5 @@
 {
-  "name": "easyapi",
+  "name": "easycall",
   "version": "0.0.1",
   "description": "easyapi, is a framework to call api and store results painlessly.",
   "main": "dist/index.js",
