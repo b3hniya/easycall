@@ -17,7 +17,7 @@ export interface EasycallInstanceConfig {
   // if this field is populated it will ignore the following fields except for the EASY CALL CONFIG
   axiosConfig?: AxiosRequestConfig;
 
-  baseUrl?: string;
+  baseURL?: string;
   headers?: { [key: string]: string };
   timeout?: number;
   responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
