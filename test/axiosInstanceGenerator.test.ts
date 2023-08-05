@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { EasycallInstanceConfig } from '../lib/types/Easycall.type'
-import { axiosInstanceGenerator } from "../lib/Axios/AxiosInstanceGenerator"
+import { axiosInstanceGenerator } from "../lib/axios/AxiosInstanceGenerator"
 
 describe('axiosInstanceGenerator', () => {
     let config: EasycallInstanceConfig;
