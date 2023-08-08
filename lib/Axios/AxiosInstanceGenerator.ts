@@ -1,9 +1,8 @@
-import _ from "lodash";
-import axios from "axios";
-import { EasycallInstanceConfig } from "../types/Easycall.type";
+import axios, { AxiosInstance } from "axios";
+import { EasycallInstanceConfig } from "../types/EasycallInstance.type";
 import { generateAxiosBaseConfig } from "./AxiosBaseConfigGenerator";
 
-export const axiosInstanceGenerator = (config: EasycallInstanceConfig) => {
+export const axiosInstanceGenerator = (config: EasycallInstanceConfig): AxiosInstance => {
     const baseConfig = generateAxiosBaseConfig(config);
     const axiosInstance = axios.create(baseConfig);
 

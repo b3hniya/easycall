@@ -3,9 +3,13 @@ import { AxiosRequestConfig } from "axios";
 export type TokenConfig = {
   field: string;
   getToken: () => string;
+  autoRefreshToken: boolean;
 };
 
-export type ResponseDataSchema = {};
+export type ResponseDataSchema = {
+  dataSchema: any;
+  autoPrune: boolean;
+};
 
 export type RetryConfig = {
   retries: number;
@@ -24,27 +28,23 @@ export interface EasycallInstanceConfig {
   validateStatus?: (status: number) => boolean;
 
   // EASY CALL CONFIG
-  onInitHeaders?: () => { [key: string]: string };
-
-  token?: TokenConfig;
-
-  onBeforeRequest?: (config: AxiosRequestConfig) => void;
-  onAfterRequest?: () => void;
-
-  onRequestError?: (error: any) => void;
-  onResponseError?: (error: any) => void;
-
-  onBeforeRetry?: (response: any) => void;
-  onAfterRetry?: () => void;
 
   retryConfig?: RetryConfig;
 
-  onTokenRefresh?: () => Promise<void>;
+  onRequest?: (config: any) => void;
+  onProcessRequestData: (requestData: any) => any;
+  onRequestError?: (error: any) => void;
 
-  onProcessRequest?: (requestData: any) => any;
-  onProcessResponse?: (responseData: any) => any;
+  // This will get called when the request is pending...
+  onAfterRequest?: () => void;
 
-  onAfterResponse?: (responseData: any) => void;
+  onResponse?: (responseData: any) => void;
+  onProcessResponseData?: (responseData: any) => any;
+  onResponseError?: (error: any) => void;
 
   responseDataSchema?: ResponseDataSchema;
+
+  token?: TokenConfig;
+  // This will get called when the response status is 401 and OnTokenRefresh is defined...
+  onTokenRefresh?: () => Promise<void>;
 };
