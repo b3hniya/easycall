@@ -16,7 +16,7 @@ export type RetryConfig = {
   retryDelay: (retryCount: number) => number;
 };
 
-export interface EasycallInstanceConfig {
+export interface EasyCallInstanceConfig {
   // AXIOS CONFIG
   // if this field is populated it will ignore the following fields except for the EASY CALL CONFIG
   axiosConfig?: AxiosRequestConfig;
@@ -32,11 +32,8 @@ export interface EasycallInstanceConfig {
   retryConfig?: RetryConfig;
 
   onRequest?: (config: any) => void;
-  onProcessRequestData: (requestData: any) => any;
+  onProcessRequestData?: (requestData: any) => any;
   onRequestError?: (error: any) => void;
-
-  // This will get called when the request is pending...
-  onAfterRequest?: () => void;
 
   onResponse?: (responseData: any) => void;
   onProcessResponseData?: (responseData: any) => any;

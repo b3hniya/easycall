@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
-import { EasycallInstanceConfig } from '../lib/types/Easycall.type'
-import { axiosInstanceGenerator } from "../lib/axios/AxiosInstanceGenerator"
+import { EasyCallInstanceConfig } from '../lib/types/EasyCallInstance.type';
+import { generateAxiosInstance } from '../lib/helper/generateAxiosInstance.helper';
 
 describe('axiosInstanceGenerator', () => {
-    let config: EasycallInstanceConfig;
+    let config: EasyCallInstanceConfig;
     let axiosInstance: AxiosInstance;
 
     beforeEach(() => {
@@ -15,7 +15,7 @@ describe('axiosInstanceGenerator', () => {
             timeout: 5000,
         };
 
-        axiosInstance = axiosInstanceGenerator(config);
+        axiosInstance = generateAxiosInstance(config);
     });
 
     it('should create an axios instance', () => {
@@ -32,7 +32,8 @@ describe('axiosInstanceGenerator', () => {
 
     it('should use the baseURL from the config if axiosConfig is not provided', () => {
         delete config.axiosConfig;
-        axiosInstance = axiosInstanceGenerator(config);
+        axiosInstance = generateAxiosInstance(config);
         expect(axiosInstance.defaults.baseURL).toBe(config.baseURL);
     });
 });
+
