@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export type TokenConfig = {
   field: string;
@@ -16,6 +16,14 @@ export type RetryConfig = {
   retryDelay: (retryCount: number) => number;
 };
 
+export type OnBeforeRequest = (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
+
+export type OnError = (err: any) => any
+
+export type OnAfterResponse = (
+  value: AxiosResponse<any, any>,
+) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>
+
 export interface EasyCallInstanceConfig {
   // AXIOS CONFIG
   // if this field is populated it will ignore the following fields except for the EASY CALL CONFIG
@@ -31,13 +39,11 @@ export interface EasyCallInstanceConfig {
 
   retryConfig?: RetryConfig;
 
-  onRequest?: (config: any) => void;
-  onProcessRequestData?: (requestData: any) => any;
-  onRequestError?: (error: any) => void;
+  onBeforeRequest?: OnBeforeRequest;
+  onBeforeRequestError?: OnError;
 
-  onResponse?: (responseData: any) => void;
-  onProcessResponseData?: (responseData: any) => any;
-  onResponseError?: (error: any) => void;
+  onAfterResponse?: OnAfterResponse;
+  onAfterResponseError?: OnError;
 
   responseDataSchema?: ResponseDataSchema;
 
