@@ -59,3 +59,25 @@ function Test(){
         </>
 }
 ```
+
+## Low level approach
+
+If you don't want to wrap your application like above you can go as below.
+
+```ts
+const apiRoutes = [
+  {
+     endpoint: "/todo",
+     methods: ["Get", "Post"]
+  }
+]
+
+const caller = createCaller(apiRoutes);
+export caller;
+```
+
+[!IMPORTANT]
+Using this approach you will not be able to use the custom hook, instead you can implement your own hook.
+
+[!NOTE]
+Note that with above approach you cannot store results inside the caller store, caller store is dependant on context which is included inside `<EasyCallRoot />`.
