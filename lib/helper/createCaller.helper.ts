@@ -1,4 +1,4 @@
-import { EasyCallInstanceConfig } from "../types/EasyCallInstance.type";
+import { EasyCallInstanceConfig } from "../types/EasycallInstance.type";
 import { generateAxiosInstance } from "./generateAxiosInstance.helper";
 
 export const createCaller = (callerConfig: EasyCallInstanceConfig) => {

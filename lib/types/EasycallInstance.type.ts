@@ -1,19 +1,19 @@
-import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import {AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from "axios";
 
 export type TokenConfig = {
-  field: string;
-  getToken: () => string;
-  autoRefreshToken: boolean;
+    field: string;
+    getToken: () => string;
+    autoRefreshToken: boolean;
 };
 
 export type ResponseDataSchema = {
-  dataSchema: any;
-  autoPrune: boolean;
+    dataSchema: any;
+    autoPrune: boolean;
 };
 
 export type RetryConfig = {
-  retries: number;
-  retryDelay: (retryCount: number) => number;
+    retries: number;
+    retryDelay: (retryCount: number) => number;
 };
 
 export type OnBeforeRequest = (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
@@ -21,33 +21,33 @@ export type OnBeforeRequest = (config: InternalAxiosRequestConfig) => InternalAx
 export type OnError = (err: any) => any
 
 export type OnAfterResponse = (
-  value: AxiosResponse<any, any>,
+    value: AxiosResponse<any, any>,
 ) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>
 
 export interface EasyCallInstanceConfig {
-  // AXIOS CONFIG
-  // if this field is populated it will ignore the following fields except for the EASY CALL CONFIG
-  axiosConfig?: AxiosRequestConfig;
+    // AXIOS CONFIG
+    // if this field is populated it will ignore the following fields except for the EASY CALL CONFIG
+    axiosConfig?: AxiosRequestConfig;
 
-  baseURL?: string;
-  headers?: { [key: string]: string };
-  timeout?: number;
-  responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
-  validateStatus?: (status: number) => boolean;
+    baseURL?: string;
+    headers?: { [key: string]: string };
+    timeout?: number;
+    responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
+    validateStatus?: (status: number) => boolean;
 
-  // EASY CALL CONFIG
+    // EASY CALL CONFIG
 
-  retryConfig?: RetryConfig;
+    retryConfig?: RetryConfig;
 
-  onBeforeRequest?: OnBeforeRequest;
-  onBeforeRequestError?: OnError;
+    onBeforeRequest?: OnBeforeRequest;
+    onBeforeRequestError?: OnError;
 
-  onAfterResponse?: OnAfterResponse;
-  onAfterResponseError?: OnError;
+    onAfterResponse?: OnAfterResponse;
+    onAfterResponseError?: OnError;
 
-  responseDataSchema?: ResponseDataSchema;
+    responseDataSchema?: ResponseDataSchema;
 
-  token?: TokenConfig;
-  // This will get called when the response status is 401 and OnTokenRefresh is defined...
-  onTokenRefresh?: () => Promise<void>;
-};
+    token?: TokenConfig;
+    // This will get called when the response status is 401 and OnTokenRefresh is defined...
+    onTokenRefresh?: () => Promise<void>;
+}
