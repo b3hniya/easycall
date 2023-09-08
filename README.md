@@ -76,8 +76,8 @@ const caller = createCaller(apiRoutes);
 export caller;
 ```
 
-[!IMPORTANT]
-Using this approach you will not be able to use the custom hook, instead you can implement your own hook.
+> [!IMPORTANT]
+> Using this approach you will not be able to use the custom hook, instead you can implement your own hook.
 
-[!NOTE]
-Note that with above approach you cannot store results inside the caller store, caller store is dependant on context which is included inside `<EasyCallRoot />`.
+> [!NOTE]
+> Note that with above approach you cannot store results inside the caller store, caller store is dependant on context which is included inside `<EasyCallRoot />`.
