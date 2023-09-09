@@ -9,7 +9,7 @@ type Options = {
   afterResponse?: OnAfterResponse;
 };
 
-function useCaller(methodFunction: MethodFunction, options: Options = {}) {
+export function useCaller(methodFunction: MethodFunction, options: Options = {}) {
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext);
 
 
