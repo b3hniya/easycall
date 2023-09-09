@@ -17,10 +17,10 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
+  const call = () => {
 
     if (!_.isEmpty(callers) && methodFunction) {
+      setLoading(true);
 
       methodFunction(callers)
         .then((response: { data: any }) => {
@@ -34,10 +34,16 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
         });
     }
 
+
+  }
+
+  useEffect(() => {
+    call()
+
     return () => {
       // Cleanup effects, if necessary, e.g., cancelling a request
     };
-  }, [methodFunction, options]);
+  }, []);
 
-  return { data, error, loading, axiosInstance, easyCallConfig };
+  return { data, error, loading, axiosInstance, easyCallConfig, call };
 }
