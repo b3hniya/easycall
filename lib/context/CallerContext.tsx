@@ -1,4 +1,4 @@
-import React, { createContext } from "react"
+import React, { createContext, useCallback } from "react"
 import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
 import { createCaller } from "../helper/createCaller.helper"
 import { Callers } from "../types/Caller.type"
@@ -22,9 +22,17 @@ type CallerProviderProps = {
 }
 
 export const CallerProvider = (props: CallerProviderProps) => {
+  // const [callers, setCallers] = React.useState((prev) => {
+  //   return createCaller(props.easyCallConfig)
+  // })
+
+  const createCallerCallback = useCallback(() => {
+    return createCaller(props.easyCallConfig)
+  }, [props.easyCallConfig])
+
   return (
     <CallerContext.Provider
-      value={{ easyCallConfig: props.easyCallConfig, ...createCaller(props.easyCallConfig) }}
+      value={{ easyCallConfig: props.easyCallConfig, ...createCallerCallback() }}
     >
       {props.children}
     </CallerContext.Provider>
