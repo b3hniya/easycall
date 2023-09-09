@@ -38,7 +38,7 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
     return () => {
       // Cleanup effects, if necessary, e.g., cancelling a request
     };
-  }, [methodFunction, options]);
+  }, [methodFunction, options, callers, axiosInstance, easyCallConfig]);
 
   return { data, error, loading, axiosInstance, easyCallConfig };
 }
