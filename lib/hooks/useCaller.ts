@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { OnAfterResponse, OnBeforeRequest } from '../types/EasycallInstance.type';
 import { CallerContext } from '../context/CallerContext';
 import { Callers } from '../types/Caller.type';
+import _ from "lodash"
 
 type MethodFunction = (callers: Callers) => Promise<any>
 type Options = {
@@ -20,7 +21,7 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
   useEffect(() => {
     setLoading(true);
 
-    if (callers && methodFunction) {
+    if (!_.isEmpty(callers) && methodFunction) {
 
       methodFunction(callers)
         .then((response: { data: any }) => {
