@@ -12,7 +12,7 @@ type Options = {
 
 export function useCaller(methodFunction?: MethodFunction, options: Options = {}) {
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext);
-
+  console.log("callers", callers)
 
   const [data, setData] = useState(null);
   const [error, setError] = useState<Error | null>(null);
