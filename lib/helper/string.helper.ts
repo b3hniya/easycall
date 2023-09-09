@@ -1,4 +1,4 @@
-import {Params} from "./createCaller.helper";
+import { Params } from "../types/Caller.type"
 
 export const formatString = (text: string, ...args: string[]) =>
     text.replace(/{(\d+)}/g, (match, number) =>

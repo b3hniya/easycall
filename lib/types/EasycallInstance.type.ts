@@ -41,7 +41,6 @@ export type ApiRoute = {
             // NOTE that we pass the argument inside the caller function e.g. caller.usersPost.get(['user_id', 'post_id'])
             result => '/users/user_id/posts/post_id'
     */
-  arguments?: string[]
   method: "get" | "post" | "put" | "delete" | "patch"
 }
 
@@ -54,12 +53,12 @@ export interface EasyCallInstanceConfig {
   headers?: { [key: string]: string }
   timeout?: number
   responseType?:
-    | "arraybuffer"
-    | "blob"
-    | "document"
-    | "json"
-    | "text"
-    | "stream"
+  | "arraybuffer"
+  | "blob"
+  | "document"
+  | "json"
+  | "text"
+  | "stream"
   validateStatus?: (status: number) => boolean
 
   // EASY CALL CONFIG

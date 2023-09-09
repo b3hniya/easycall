@@ -1,8 +1,14 @@
+
+export type Params = {
+  args?: string[]
+  queryString?: string
+}
+
 export type Caller = {
-  get?: () => Promise<any>
-  post?: (data: any) => Promise<any>
-  put?: (data: any) => Promise<any>
-  delete?: () => Promise<any>
+  get?: (params?: Params) => Promise<any>
+  post?: (data: any, params?: Params) => Promise<any>
+  put?: (data: any, params?: Params) => Promise<any>
+  delete?: (params?: Params) => Promise<any>
 }
 
 

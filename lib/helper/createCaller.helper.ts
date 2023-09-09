@@ -1,13 +1,9 @@
 import { AxiosInstance } from "axios"
 import { getUrlString } from "./string.helper"
-import { Callers } from "../types/Caller.type"
+import { Callers, Params } from "../types/Caller.type"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
 import { ApiRoute, EasyCallInstanceConfig } from "../types/EasycallInstance.type"
 
-export type Params = {
-  args?: string[]
-  queryString?: string
-}
 
 export const generateApiMethod = (
   callers: Callers,
@@ -21,6 +17,7 @@ export const generateApiMethod = (
 
   if (method === "get") {
     apiMethod = async <RESPONSE_TYPE extends unknown>(params?: Params) => {
+      console.log(getUrlString(endpoint, params ?? {}), params)
       return axiosInstance.get<RESPONSE_TYPE>(getUrlString(endpoint, params ?? {}))
     }
   }
@@ -78,6 +75,6 @@ export const createCaller = (callerConfig: EasyCallInstanceConfig) => {
 
   return {
     axiosInstance,
-    ...callers,
+    callers,
   }
 }
