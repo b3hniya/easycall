@@ -1,3 +1,4 @@
+import { ApiRoute } from "./EasycallInstance.type"
 
 export type Params = {
   args?: string[]
@@ -11,7 +12,6 @@ export type Caller = {
   delete?: (params?: Params) => Promise<any>
 }
 
-
 export type Callers = {
-  [Key: string]: Caller
+  [key: ApiRoute['key']]: Caller;
 }

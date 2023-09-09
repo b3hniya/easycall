@@ -1,17 +1,23 @@
 import { createCaller } from "./helper/createCaller.helper"
-
+import { Callers } from "./types/Caller.type"
+import { ApiRoute } from "./types/EasycallInstance.type"
+const apiRoutes: ApiRoute[] = [
+  {
+    key: "todos",
+    method: "get",
+    endpoint: "todos",
+  },
+  {
+    key: "todos2",
+    method: "post",
+    endpoint: "todos",
+  }
+]
 const { callers } = createCaller({
   baseURL: "https://jsonplaceholder.typicode.com/",
   timeout: 5000,
-  apiRoutes: [
-    {
-      key: "todos",
-      method: "get",
-      endpoint: "todos/{0}",
-    }
-  ]
+  apiRoutes
 })
 
-callers?.todos?.get?.({
-  args: ["1"]
-}).then((res: any) => console.log(res.data))
+
+console.log(callers)

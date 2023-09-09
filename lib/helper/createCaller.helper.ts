@@ -1,3 +1,4 @@
+
 import { AxiosInstance } from "axios"
 import { getUrlString } from "./string.helper"
 import { Callers, Params } from "../types/Caller.type"
@@ -54,7 +55,7 @@ export const generateApiMethodsBasedOnCallerConfig = (
 
   apiRoutes.forEach((route) => generateApiMethod(callers, route, axiosInstance, route.method))
 
-  return callers
+  return callers as Callers
 }
 
 export const createCaller = (callerConfig: EasyCallInstanceConfig) => {
