@@ -22,10 +22,6 @@ type CallerProviderProps = {
 }
 
 export const CallerProvider = (props: CallerProviderProps) => {
-  const { callers } = createCaller(props.easyCallConfig)
-  console.log(callers)
-
-
   return (
     <CallerContext.Provider
       value={{ easyCallConfig: props.easyCallConfig, ...createCaller(props.easyCallConfig) }}
