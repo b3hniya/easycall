@@ -32,7 +32,6 @@ export type OnAfterResponse = (
 
 export type ApiRoute = {
   key: string
-  endpoint: string
   /*
         it accepts arguments that will be used to replace the endpoint by using the following format: {0}, {1}, {2}, etc...
         example:
@@ -40,7 +39,8 @@ export type ApiRoute = {
             arguments => ['user_id', 'post_id'] 
             // NOTE that we pass the argument inside the caller function e.g. caller.usersPost.get(['user_id', 'post_id'])
             result => '/users/user_id/posts/post_id'
-    */
+  */
+  endpoint: string
   method: "get" | "post" | "put" | "delete" | "patch"
 }
 
