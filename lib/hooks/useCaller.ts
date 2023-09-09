@@ -20,7 +20,7 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
   useEffect(() => {
     setLoading(true);
 
-    if (methodFunction) {
+    if (callers && methodFunction) {
 
       methodFunction(callers)
         .then((response: { data: any }) => {
