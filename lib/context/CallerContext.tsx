@@ -1,4 +1,4 @@
-import React, { Provider, createContext } from "react"
+import React, { createContext } from "react"
 import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
 import { createCaller } from "../helper/createCaller.helper"
 import { Callers } from "../types/Caller.type"

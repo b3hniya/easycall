@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { OnAfterResponse, OnBeforeRequest } from '../types/EasycallInstance.type';
-import { CallerContext } from '../context/callerContext';
+import { CallerContext } from '../context/CallerContext';
 import { Callers } from '../types/Caller.type';
 
 type MethodFunction = (callers: Callers) => Promise<any>
@@ -36,5 +36,5 @@ export function useCaller(methodFunction: MethodFunction, options: Options = {})
     };
   }, [methodFunction, options]);
 
-  return { data, error, loading };
+  return { data, error, loading, axiosInstance, easyCallConfig };
 }
