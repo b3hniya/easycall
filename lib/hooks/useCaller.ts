@@ -3,13 +3,13 @@ import { OnAfterResponse, OnBeforeRequest } from '../types/EasycallInstance.type
 import { CallerContext } from '../context/CallerContext';
 import { Callers } from '../types/Caller.type';
 
-type MethodFunction = (callers: Callers) => Promise<any>
+type MethodFunction = (callers?: Callers) => Promise<any>
 type Options = {
   beforeRequest?: OnBeforeRequest;
   afterResponse?: OnAfterResponse;
 };
 
-export function useCaller(methodFunction: MethodFunction, options: Options = {}) {
+export function useCaller(methodFunction?: MethodFunction, options: Options = {}) {
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext);
 
 
@@ -20,7 +20,7 @@ export function useCaller(methodFunction: MethodFunction, options: Options = {})
   useEffect(() => {
     setLoading(true);
 
-    methodFunction(callers)
+    methodFunction?.(callers)
       .then((response: { data: any }) => {
         setData(response.data);
       })
