@@ -18,7 +18,6 @@ export const generateApiMethod = (
 
   if (method === "get") {
     apiMethod = async <RESPONSE_TYPE extends unknown>(params?: Params) => {
-      console.log(getUrlString(endpoint, params ?? {}), params)
       return axiosInstance.get<RESPONSE_TYPE>(getUrlString(endpoint, params ?? {}))
     }
   }

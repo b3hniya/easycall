@@ -1,5 +1,4 @@
 import { createCaller } from "./helper/createCaller.helper"
-import { Callers } from "./types/Caller.type"
 import { ApiRoute } from "./types/EasycallInstance.type"
 const apiRoutes: ApiRoute[] = [
   {
