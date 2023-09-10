@@ -1,40 +1,41 @@
-import { useState, useEffect, useContext } from 'react';
-import { OnAfterResponse, OnBeforeRequest } from '../types/EasycallInstance.type';
-import { CallerContext } from '../context/CallerContext';
-import { Callers } from '../types/Caller.type';
+// TODO => add useGetCallById
+// TODO => add useGetAllCallers
+
+import { useState, useEffect, useContext } from "react"
+import { OnAfterResponse, OnBeforeRequest } from "../types/EasycallInstance.type"
+import { CallerContext } from "../context/CallerContext"
+import { Callers } from "../types/Caller.type"
 import _ from "lodash"
 
 type MethodFunction = (callers: Callers) => Promise<any>
 type Options = {
-  beforeRequest?: OnBeforeRequest;
-  afterResponse?: OnAfterResponse;
-};
+  beforeRequest?: OnBeforeRequest
+  afterResponse?: OnAfterResponse
+  dependencies?: any[]
+}
 
 export function useCaller(methodFunction?: MethodFunction, options: Options = {}) {
-  const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext);
+  const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext)
 
-  const [data, setData] = useState(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null)
+  const [error, setError] = useState<Error | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const call = () => {
-
     if (!_.isEmpty(callers) && methodFunction) {
-      setLoading(true);
+      setLoading(true)
 
       methodFunction(callers)
         .then((response: { data: any }) => {
-          setData(response.data);
+          setData(response.data)
         })
         .catch((err: Error) => {
-          setError(err);
+          setError(err)
         })
         .finally(() => {
-          setLoading(false);
-        });
+          setLoading(false)
+        })
     }
-
-
   }
 
   useEffect(() => {
@@ -42,8 +43,8 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
 
     return () => {
       // Cleanup effects, if necessary, e.g., cancelling a request
-    };
-  }, []);
+    }
+  }, options.dependencies ?? [])
 
-  return { data, error, loading, axiosInstance, easyCallConfig, call };
+  return { data, error, loading, axiosInstance, easyCallConfig, call }
 }
