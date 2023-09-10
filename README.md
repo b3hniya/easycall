@@ -1,11 +1,12 @@
 # EasyCall package
 
-## Config Sample
+## Sample Config
 
 ```tsx
     const Url1 = "google.com"
     const Url2 = "bing.com"
     <EasyCallRoot config={{
+        // You can go with baseURL as well...
         apiEndpoints: [
             {
             endpoint: `${Url1}/todos`,
@@ -37,20 +38,14 @@
 //Test.component.tsx
 
 function Test(){
-  {caller, error, loading} = useEasyCall(
+  {call, data, error, loading} = useEasyCall(callers => callers.todos.get(),
     {
         onBeforeRequest(requestConfig){
             // do something before request at component level
             return requestConfig;
         }
     })
-
-  const [todo, setTodo] = useState();
-  useEffect(() => {
-    caller.todo1.get().then(res => res.save())
-    caller.todo2.get().then(res => setTodo(res.data))
-  }, [])
-
+    
   return loading ?
         <Loading /> :
         <>
