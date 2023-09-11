@@ -1,7 +1,8 @@
 {
   "name": "easycall",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "description": "easyapi, is a framework to call api and store results painlessly.",
+  "keywords": ["easycall", "API", "HTTP", "HTTPS", "Axios", "API call"],
   "main": "dist/index.js",
   "author": "Behniya <b3hniya@gmail.com>",
   "license": "MIT",
