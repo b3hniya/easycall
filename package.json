@@ -1,6 +1,6 @@
 {
   "name": "easycall",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "easyapi, is a framework to call api and store results painlessly.",
   "main": "dist/index.js",
   "author": "Behniya <b3hniya@gmail.com>",

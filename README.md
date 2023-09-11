@@ -1,78 +1,117 @@
-# EasyCall package
+# EasyCall Package
 
-## Sample Config
+EasyCall offers a streamlined approach to making API calls in React applications. It wraps your components with a context provider, offering hooks and utilities for managing HTTP requests seamlessly.
+
+## Installation
+
+```bash
+npm install easycall --save
+```
+
+## Features
+
+- Concise API for managing HTTP requests.
+- Global and component-level interceptors for requests and responses.
+- Support for multiple API endpoints with diverse methods.
+- Context-based state management for API results.
+
+## Getting Started
+
+### Sample Config
+
+Easily define multiple endpoints and associated methods:
 
 ```tsx
-    const Url1 = "google.com"
-    const Url2 = "bing.com"
-    <EasyCallRoot config={{
-        // You can go with baseURL as well...
-        apiEndpoints: [
-            {
+const Url1 = "https://google.com";
+const Url2 = "https://bing.com";
+
+<EasyCallRoot config={{
+    apiEndpoints: [
+        {
             endpoint: `${Url1}/todos`,
             methods: ["Get", "Post"],
             key: "todo1"
-            },
-            {
+        },
+        {
             endpoint: `${Url2}/todos`,
             methods: ["Get", "Post"],
             key: "todo2"
-            }
-        ],
-        onBeforeRequest(requestConfig) {
-            // do something before request at global level
-            return requestConfig
-        },
-        onAfterResponse(responseData) {
-            // do something after response at global level
-            return responseData
         }
-    }}>
-        <App />
-    </EasyCallRoot>
+    ],
+    onBeforeRequest(requestConfig) {
+        // Modify or log request config globally
+        return requestConfig;
+    },
+    onAfterResponse(responseData) {
+        // Process or log response data globally
+        return responseData;
+    }
+}}>
+    <App />
+</EasyCallRoot>
 ```
 
-## Usage Sample
+### Usage Sample
+
+Utilize the `useEasyCall` hook within your components:
 
 ```tsx
-//Test.component.tsx
+// Test.component.tsx
 
-function Test(){
-  {call, data, error, loading} = useEasyCall(callers => callers.todos.get(),
-    {
-        onBeforeRequest(requestConfig){
-            // do something before request at component level
-            return requestConfig;
-        }
-    })
-    
-  return loading ?
-        <Loading /> :
-        <>
-            {error ?? <Alert message={error} />
-            {data ?? <DataDisplayer data={caller.todo.get.data} />}
-        </>
+function Test() {
+  const {call, data, error, loading} = useEasyCall(callers => callers.todos.get(), {
+      onBeforeRequest(requestConfig) {
+          // Modify or log request config at component level
+          return requestConfig;
+      }
+  });
+
+  return loading ? (
+    <Loading />
+  ) : (
+    <>
+        {error && <Alert message={error} />}
+        {data && <DataDisplayer data={data} />}
+    </>
+  );
 }
 ```
 
-## Low level approach
+### Low-Level Approach
 
-If you don't want to wrap your application like above you can go as below.
+For projects or sections where you'd prefer not to use the context-based approach:
 
-```ts
+```tsx
 const apiRoutes = [
-  {
-     endpoint: "/todo",
-     methods: ["Get", "Post"]
-  }
-]
+    {
+        endpoint: "/todo",
+        methods: ["Get", "Post"]
+    }
+];
 
 const caller = createCaller(apiRoutes);
 export caller;
 ```
 
 > [!IMPORTANT]
-> Using this approach you will not be able to use the custom hook, instead you can implement your own hook.
+> In the low-level approach, the custom hook `useEasyCall` is not available. Consider creating your custom hook or use the provided utilities.
 
 > [!NOTE]
-> Note that with above approach you cannot store results inside the caller store, caller store is dependant on context which is included inside `<EasyCallRoot />`.
+> The caller store is dependent on the context provided by `<EasyCallRoot />`. When using the low-level approach, this store won't be accessible.
+
+## Roadmap
+
+- Integration with popular state management libraries.
+- Advanced caching mechanisms.
+- More granular control over request lifecycles.
+
+## Contributing
+
+We value contributions and suggestions from the community. Whether it's a bug fix, a new feature, or a typo, we appreciate the time you take to improve EasyCall. 
+
+- **Bug Reports**: Open an issue for any bugs or issues you encounter.
+- **Feature Requests**: New ideas and suggestions are always welcome.
+- **Development**: Create a pull request with new features or fixes.
+
+> [!NOTE]
+> The `onBeforeRequest` and `onAfterResponse` hooks at the component level are still under development.
