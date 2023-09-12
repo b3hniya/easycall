@@ -1,6 +1,6 @@
 {
   "name": "easycall",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "easyapi, is a framework to call api and store results painlessly.",
   "keywords": ["easycall", "API", "HTTP", "HTTPS", "Axios", "API call"],
   "main": "dist/index.js",

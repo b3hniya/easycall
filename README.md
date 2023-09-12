@@ -64,7 +64,7 @@ function Test() {
       return requestConfig
     },
   })
-
+ 
   return loading ? (
     <Loading />
   ) : (
@@ -100,7 +100,8 @@ export caller;
 
 ## Roadmap
 
-- Integration with popular state management libraries.
+- Error handling at component and global level.
+- Save fetch data into its store.
 - Advanced caching mechanisms.
 - More granular control over request lifecycles.
 
