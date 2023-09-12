@@ -1,6 +1,3 @@
-// TODO => add useGetCallById
-// TODO => add useGetAllCallers
-
 import { useState, useEffect, useContext } from "react"
 import { OnAfterResponse, OnBeforeRequest } from "../types/EasycallInstance.type"
 import { CallerContext } from "../context/CallerContext"
@@ -14,7 +11,7 @@ type Options = {
   dependencies?: any[]
 }
 
-export function useCaller(methodFunction?: MethodFunction, options: Options = {}) {
+export function useCaller(methodFunction: MethodFunction, options: Options = {}) {
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext)
 
   const [data, setData] = useState(null)
@@ -26,8 +23,8 @@ export function useCaller(methodFunction?: MethodFunction, options: Options = {}
       setLoading(true)
 
       methodFunction(callers)
-        .then((response: { data: any }) => {
-          setData(response.data)
+        .then((response) => {
+          setData(response)
         })
         .catch((err: Error) => {
           setError(err)

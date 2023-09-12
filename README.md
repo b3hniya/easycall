@@ -22,33 +22,32 @@ npm install easycall --save
 Easily define multiple endpoints and associated methods:
 
 ```tsx
-const Url1 = "https://google.com";
-const Url2 = "https://bing.com";
+import "./index.css"
+import App from "./App.tsx"
+import ReactDOM from "react-dom/client"
+import { CallerProvider } from "easycall"
 
-<EasyCallRoot config={{
-    apiEndpoints: [
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <CallerProvider
+    easyCallConfig={{
+      baseURL: "https://jsonplaceholder.typicode.com/",
+      apiRoutes: [
         {
-            endpoint: `${Url1}/todos`,
-            methods: ["Get", "Post"],
-            key: "todo1"
+          key: "todos",
+          method: "get",
+          endpoint: "todos",
         },
         {
-            endpoint: `${Url2}/todos`,
-            methods: ["Get", "Post"],
-            key: "todo2"
-        }
-    ],
-    onBeforeRequest(requestConfig) {
-        // Modify or log request config globally
-        return requestConfig;
-    },
-    onAfterResponse(responseData) {
-        // Process or log response data globally
-        return responseData;
-    }
-}}>
+          key: "todo",
+          method: "get",
+          endpoint: "todo/:id",
+        },
+      ],
+    }}
+  >
     <App />
-</EasyCallRoot>
+  </CallerProvider>,
+)
 ```
 
 ### Usage Sample
@@ -59,21 +58,21 @@ Utilize the `useEasyCall` hook within your components:
 // Test.component.tsx
 
 function Test() {
-  const {call, data, error, loading} = useEasyCall(callers => callers.todos.get(), {
-      onBeforeRequest(requestConfig) {
-          // Modify or log request config at component level
-          return requestConfig;
-      }
-  });
+  const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.(), {
+    onBeforeRequest(requestConfig) {
+      // Modify or log request config at component level
+      return requestConfig
+    },
+  })
 
   return loading ? (
     <Loading />
   ) : (
     <>
-        {error && <Alert message={error} />}
-        {data && <DataDisplayer data={data} />}
+      {error && <Alert message={error} />}
+      {data && <DataDisplayer data={data} />}
     </>
-  );
+  )
 }
 ```
 
@@ -107,7 +106,7 @@ export caller;
 
 ## Contributing
 
-We value contributions and suggestions from the community. Whether it's a bug fix, a new feature, or a typo, we appreciate the time you take to improve EasyCall. 
+We value contributions and suggestions from the community. Whether it's a bug fix, a new feature, or a typo, we appreciate the time you take to improve EasyCall.
 
 - **Bug Reports**: Open an issue for any bugs or issues you encounter.
 - **Feature Requests**: New ideas and suggestions are always welcome.
