@@ -9,7 +9,7 @@ import {
   EasyCallInstanceConfig,
 } from "./EasycallInstance.type"
 
-import Callers, { Params, Caller } from "./Caller.type"
+import { Callers, Params, Caller } from "./Caller.type"
 
 export {
   TokenConfig,
