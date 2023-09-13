@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios"
+import { AxiosRequestConfig, AxiosResponse } from "axios"
 
 export type TokenConfig = {
   field: string
