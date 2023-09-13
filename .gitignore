@@ -20,3 +20,4 @@
 *.tsbuildinfo
 pnpm-lock.yaml
 yarn.lock
+/lib/test.tsx
