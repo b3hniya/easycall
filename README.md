@@ -98,7 +98,7 @@ function Test() {
 For projects or sections where you'd prefer not to use the context-based approach:
 
 ```tsx
-const apiRoutes = [
+const apiRoutes: ApiRoute[] = [
     {
         endpoint: "/todo",
         methods: ["Get", "Post"]
