@@ -43,6 +43,23 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           endpoint: "todo/:id",
         },
       ],
+
+      onBeforeRequest: (config) => {
+        const token = localStorage.getItem("token")
+        if (token) {
+          config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${token}`,
+          }
+        }
+
+        return config
+      },
+
+      onAfterResponse: (response) => {
+        console.log("onAfterResponse", response)
+        return response
+      },
     }}
   >
     <App />
@@ -64,7 +81,7 @@ function Test() {
       return requestConfig
     },
   })
- 
+
   return loading ? (
     <Loading />
   ) : (
