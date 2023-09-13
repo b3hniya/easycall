@@ -18,3 +18,4 @@
 *.sw?
 
 *.tsbuildinfo
+pnpm-lock.yaml
