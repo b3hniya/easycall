@@ -1,5 +1,6 @@
 import {
   AxiosRequestConfig,
+  AxiosRequestHeaders,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios"
@@ -21,7 +22,7 @@ export type RetryConfig = {
 }
 
 export type OnBeforeRequest = (
-  config: InternalAxiosRequestConfig,
+  config: InternalAxiosRequestConfig | AxiosRequestHeaders,
 ) => InternalAxiosRequestConfig
 
 export type OnError = (err: any) => any
