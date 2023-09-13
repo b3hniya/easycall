@@ -1,7 +1,7 @@
 import React, { createContext, useCallback } from "react"
 import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
 import { createCaller } from "../helper/createCaller.helper"
-import Callers from "../types/Caller.type"
+import { Callers } from "../types/Caller.type"
 import { AxiosInstance } from "axios"
 
 export type CallerContextType = {
