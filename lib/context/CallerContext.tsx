@@ -22,10 +22,6 @@ type CallerProviderProps = {
 }
 
 export const CallerProvider = (props: CallerProviderProps) => {
-  // const [callers, setCallers] = React.useState((prev) => {
-  //   return createCaller(props.easyCallConfig)
-  // })
-
   const createCallerCallback = useCallback(() => {
     return createCaller(props.easyCallConfig)
   }, [props.easyCallConfig])
