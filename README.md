@@ -78,6 +78,7 @@ import { useCaller } from "easycall"
 
 function Test() {
   const [status, setStatus] = useState(false)
+
   const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.(), {
     onBeforeRequest(requestConfig) {
       // Modify or log request config at component level
