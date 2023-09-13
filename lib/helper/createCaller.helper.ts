@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios"
+import { AxiosInstance, InternalAxiosRequestConfig } from "axios"
 import { getUrlString } from "./string.helper"
 import { Callers, Params } from "../types/Caller.type"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
@@ -55,12 +55,18 @@ export const generateApiMethodsBasedOnCallerConfig = (
   return callers as Callers
 }
 
+export type AxiosOnBeforeRequest = (
+  conf: InternalAxiosRequestConfig<any>,
+) => InternalAxiosRequestConfig<any>
+
 export const createCaller = (callerConfig: EasyCallInstanceConfig) => {
   const axiosInstance = generateAxiosInstance(callerConfig)
   axiosInstance.interceptors.request.use(
-    callerConfig?.onBeforeRequest,
+    callerConfig?.onBeforeRequest as AxiosOnBeforeRequest,
+
     callerConfig?.onBeforeRequestError,
   )
+
   axiosInstance.interceptors.response.use(
     callerConfig?.onAfterResponse,
     callerConfig?.onAfterResponseError,
