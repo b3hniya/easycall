@@ -3,20 +3,22 @@ export type Params = {
   queryString?: string
 }
 
+type Get = <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
+
+type Post = <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(data: REQUEST_TYPE, params?: Params) => Promise<RESPONSE_TYPE>
+
+type Put = <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(data: REQUEST_TYPE, params?: Params) => Promise<RESPONSE_TYPE>
+
+type Delete = <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
+
 export type Caller = {
-  get: <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
+  get: Get
 
-  post: <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(
-    data: REQUEST_TYPE,
-    params?: Params,
-  ) => Promise<RESPONSE_TYPE>
+  post: Post
 
-  put: <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(
-    data: REQUEST_TYPE,
-    params?: Params,
-  ) => Promise<RESPONSE_TYPE>
+  put: Put
 
-  delete: <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
+  delete: Delete
 }
 
 export type Callers = {

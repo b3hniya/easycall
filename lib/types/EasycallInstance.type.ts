@@ -1,9 +1,4 @@
-import {
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios"
+import { AxiosRequestConfig, AxiosResponse } from "axios"
 
 export type TokenConfig = {
   field: string
@@ -21,9 +16,7 @@ export type RetryConfig = {
   retryDelay: (retryCount: number) => number
 }
 
-export type OnBeforeRequest = (
-  config: InternalAxiosRequestConfig | AxiosRequestHeaders,
-) => InternalAxiosRequestConfig
+export type OnBeforeRequest = (config: AxiosRequestConfig) => AxiosRequestConfig
 
 export type OnError = (err: any) => any
 
@@ -53,13 +46,7 @@ export interface EasyCallInstanceConfig {
   baseURL?: string
   headers?: { [key: string]: string }
   timeout?: number
-  responseType?:
-  | "arraybuffer"
-  | "blob"
-  | "document"
-  | "json"
-  | "text"
-  | "stream"
+  responseType?: "arraybuffer" | "blob" | "document" | "json" | "text" | "stream"
   validateStatus?: (status: number) => boolean
 
   // EASY CALL CONFIG

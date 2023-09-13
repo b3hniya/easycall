@@ -1,10 +1,8 @@
-
 import { AxiosInstance } from "axios"
 import { getUrlString } from "./string.helper"
-import { Callers, Params } from "../types/Caller.type"
+import Callers, { Params } from "../types/Caller.type"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
 import { ApiRoute, EasyCallInstanceConfig } from "../types/EasycallInstance.type"
-
 
 export const generateApiMethod = (
   callers: Callers,
