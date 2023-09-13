@@ -73,13 +73,19 @@ Utilize the `useEasyCall` hook within your components:
 
 ```tsx
 // Test.component.tsx
+import { useState } from "react"
+import { useCaller } from "easycall"
 
 function Test() {
+  const [status, setStatus] = useState(false)
   const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.(), {
     onBeforeRequest(requestConfig) {
       // Modify or log request config at component level
       return requestConfig
     },
+
+    // changes in this array will trigger a new request
+    dependencies: [status],
   })
 
   return loading ? (
@@ -88,6 +94,8 @@ function Test() {
     <>
       {error && <Alert message={error} />}
       {data && <DataDisplayer data={data} />}
+
+      <button onClick={() => setStatus(!status)}>Toggle</button>
     </>
   )
 }
