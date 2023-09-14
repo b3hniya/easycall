@@ -21,6 +21,7 @@ export function useCaller(
   const [error, setError] = useState<Error | null>(null)
 
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext)
+  if (typeof options.makeInitialCall === "undefined") options.makeInitialCall = true
 
   const call = useCallback(() => {
     let beforeRequestId: number | null = null
