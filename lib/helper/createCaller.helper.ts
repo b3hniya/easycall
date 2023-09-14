@@ -1,81 +1,51 @@
-import { AxiosInstance, InternalAxiosRequestConfig } from "axios"
-import { getUrlString } from "./string.helper"
-import { Callers, Params } from "../types/Caller.type"
+import { apiMethods } from "../constants"
+import { Callers } from "../types/Caller.type"
+import { AxiosInstance } from "axios"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
-import { ApiRoute, EasyCallInstanceConfig } from "../types/EasycallInstance.type"
+import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
+import { AxiosOnBeforeRequest } from "../types/CallerHooks.type"
 
-export const generateApiMethod = (
-  callers: Callers,
-  route: ApiRoute,
-  axiosInstance: AxiosInstance,
-  method: "get" | "post" | "put" | "delete" | "patch",
-) => {
-  const { key, endpoint } = route
-
-  let apiMethod
-
-  if (method === "get") {
-    apiMethod = async <RESPONSE_TYPE extends unknown>(params?: Params) => {
-      return axiosInstance.get<RESPONSE_TYPE>(getUrlString(endpoint, params ?? {}))
-    }
-  }
-
-  if (method === "delete") {
-    apiMethod = async <RESPONSE_TYPE extends unknown>(params?: Params) => {
-      return axiosInstance.delete<RESPONSE_TYPE>(getUrlString(endpoint, params ?? {}))
-    }
-  }
-
-  if (!(method === "get" || method === "delete")) {
-    apiMethod = async <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(
-      data: REQUEST_TYPE,
-      params?: Params,
-    ) => {
-      return axiosInstance[method]<REQUEST_TYPE, RESPONSE_TYPE>(
-        getUrlString(endpoint, params ?? {}),
-        data,
-      )
-    }
-  }
-
-  callers[key] = {
-    ...callers[key],
-    [method]: apiMethod,
-  }
-}
-
-export const generateApiMethodsBasedOnCallerConfig = (
-  apiRoutes: ApiRoute[],
+export const generateCallers = (
+  callerConfig: EasyCallInstanceConfig,
   axiosInstance: AxiosInstance,
 ) => {
   const callers: Callers = {}
 
-  apiRoutes.forEach((route) => generateApiMethod(callers, route, axiosInstance, route.method))
+  if (callerConfig.apiRoutes) {
+    callerConfig.apiRoutes.forEach(({ key, endpoint, method }) => {
+      callers[key] = {
+        ...callers[key],
+        [method]: apiMethods[method].bind(null, axiosInstance, endpoint),
+      }
+    })
+  }
 
-  return callers as Callers
+  return callers
 }
 
-export type AxiosOnBeforeRequest = (
-  conf: InternalAxiosRequestConfig<any>,
-) => InternalAxiosRequestConfig<any>
+export const createAxiosInstance = (callerConfig: EasyCallInstanceConfig) => {
+  const axiosInstance = generateAxiosInstance(callerConfig)
+
+  if (callerConfig?.onBeforeRequest || callerConfig?.onBeforeRequestError) {
+    axiosInstance.interceptors.request.use(
+      callerConfig.onBeforeRequest as AxiosOnBeforeRequest,
+      callerConfig.onBeforeRequestError,
+    )
+  }
+
+  if (callerConfig?.onAfterResponse || callerConfig?.onAfterResponseError) {
+    axiosInstance.interceptors.response.use(
+      callerConfig.onAfterResponse,
+      callerConfig.onAfterResponseError,
+    )
+  }
+
+  return axiosInstance
+}
 
 export const createCaller = (callerConfig: EasyCallInstanceConfig) => {
-  const axiosInstance = generateAxiosInstance(callerConfig)
-  axiosInstance.interceptors.request.use(
-    callerConfig?.onBeforeRequest as AxiosOnBeforeRequest,
-
-    callerConfig?.onBeforeRequestError,
-  )
-
-  axiosInstance.interceptors.response.use(
-    callerConfig?.onAfterResponse,
-    callerConfig?.onAfterResponseError,
-  )
-
-  let callers: Callers = {}
-  if (callerConfig.apiRoutes) {
-    callers = generateApiMethodsBasedOnCallerConfig(callerConfig.apiRoutes, axiosInstance)
-  }
+  const axiosInstance = createAxiosInstance(callerConfig)
+  const callers = generateCallers(callerConfig, axiosInstance)
 
   return {
     axiosInstance,
