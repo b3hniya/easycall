@@ -1,36 +1,40 @@
-# EasyCall Package
+# **Easycall**: Effortless API Integration in React
 
-EasyCall offers a streamlined approach to making API calls in React applications. It wraps your components with a context provider, offering hooks and utilities for managing HTTP requests seamlessly.
+Easycall is your go-to solution for managing API interactions in React applications. It's designed from the ground up to ensure that every API call is streamlined, efficient, and intuitive. With Easycall, state management becomes second nature, and API calls feel like an integral part of your component tree.
 
-## Installation
+## **🚀 Quick Start**
+
+### **Installation**
+
+Initiate your Easycall experience with a simple installation:
 
 ```bash
 npm install easycall --save
 ```
 
-## Features
+## **🌟 Core Features**
 
-- Concise API for managing HTTP requests.
-- Global and component-level interceptors for requests and responses.
-- Support for multiple API endpoints with diverse methods.
-- Context-based state management for API results.
+- **Simplified API Management**: Navigate through your HTTP requests with unparalleled clarity and ease.
+- **Dynamic Interceptors**: Apply interceptors both globally or at the component level, refining each request and response to perfection.
+- **Flexible Endpoints**: Create a range of API endpoints effortlessly, each equipped with its specific methods.
+- **State Management Reinvented**: Enjoy the upcoming benefits of context-centric state management, where every API outcome has a dedicated space. (Coming Soon)
 
-## Getting Started
+## **🔧 Setup Guide**
 
-### Sample Config
+### **Endpoint Configuration**
 
-Easily define multiple endpoints and associated methods:
+Set the stage by configuring endpoints and methods tailored to your application's requirements:
 
 ```tsx
-import "./index.css"
-import App from "./App.tsx"
-import ReactDOM from "react-dom/client"
 import { CallerProvider } from "easycall"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <CallerProvider
-    easyCallConfig={{
+    easycallConfig={{
       baseURL: "https://jsonplaceholder.typicode.com/",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
       apiRoutes: [
         {
           key: "todos",
@@ -40,18 +44,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {
           key: "todo",
           method: "get",
-          endpoint: "todo/:id",
+          endpoint: "todos/{0}",
         },
       ],
 
       onBeforeRequest: (config) => {
         const token = localStorage.getItem("token")
-        if (token) {
-          config.headers = {
-            ...config.headers,
-            Authorization: `Bearer ${token}`,
-          }
-        }
+        config.headers = token
+          ? {
+              ...config.headers,
+              Authorization: `Bearer ${token}`,
+            }
+          : config.headers
 
         return config
       },
@@ -67,77 +71,109 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 )
 ```
 
-### Usage Sample
+## **🛠 Patterns of Usage**
 
-Utilize the `useEasyCall` hook within your components:
+### **Unleash the Power of the Caller Hook**
+
+Harness the `useCaller` hook to make your API interactions intuitive while enabling precise argument passing and query string manipulations:
+
+#### **Fundamental Usage**:
 
 ```tsx
-// Test.component.tsx
-import { useState } from "react"
 import { useCaller } from "easycall"
 
-function Test() {
-  const [status, setStatus] = useState(false)
-
-  const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.(), {
-    onBeforeRequest(requestConfig) {
-      // Modify or log request config at component level
-      return requestConfig
-    },
-
-    // changes in this array will trigger a new request
-    dependencies: [status],
-  })
+function SampleComponent() {
+  const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.())
 
   return loading ? (
-    <Loading />
+    <LoadingComponent />
   ) : (
     <>
-      {error && <Alert message={error} />}
-      {data && <DataDisplayer data={data} />}
-
-      <button onClick={() => setStatus(!status)}>Toggle</button>
+      {error && <ErrorAlert message={error.message} />}
+      {data && <DataViewer data={data} />}
     </>
   )
 }
 ```
 
-### Low-Level Approach
+#### **Advanced Engagement with Arguments and Query Strings**:
 
-For projects or sections where you'd prefer not to use the context-based approach:
+Envision fetching a specific `todo` item using an identifier like `id`. Easycall makes this easy by dynamically replacing endpoint placeholders:
 
 ```tsx
-const apiRoutes: ApiRoute[] = [
-    {
-        endpoint: "/todo",
-        methods: ["Get", "Post"]
-    }
-];
+import { useCaller } from "easycall"
 
-const caller = createCaller(apiRoutes);
-export caller;
+export const DetailedComponent = () => {
+  const { call, data, error, loading } = useCaller((caller) =>
+    caller.todo.get({
+      args: ["id"],
+      queryString: "?numberOfItems=10",
+    }),
+  )
+
+  return loading ? (
+    <LoadingComponent />
+  ) : (
+    <>
+      {error && <ErrorAlert message={error.message} />}
+      {data && <DataViewer data={data} />}
+    </>
+  )
+}
 ```
 
-> [!IMPORTANT]
-> In the low-level approach, the custom hook `useEasyCall` is not available. Consider creating your custom hook or use the provided utilities.
+#### **Stay Updated with Reactivity**:
 
-> [!NOTE]
-> The caller store is dependent on the context provided by `<EasyCallRoot />`. When using the low-level approach, this store won't be accessible.
+Easycall's `useCaller` hook is brilliantly reactive. It re-invokes the API call whenever a dependency changes, guaranteeing that your components are always in sync with the freshest data:
 
-## Roadmap
+```tsx
+import { useState } from "react"
+import { useCaller } from "easycall"
 
-- Error handling at component and global level.
-- Save fetch data into its store.
-- Advanced caching mechanisms.
-- More granular control over request lifecycles.
+function DynamicComponent() {
+  const [toggle, setToggle] = useState(false)
 
-## Contributing
+  const { call, data, error, loading } = useCaller((caller) => caller?.todos?.get?.(), {
+    dependencies: [toggle],
+  })
 
-We value contributions and suggestions from the community. Whether it's a bug fix, a new feature, or a typo, we appreciate the time you take to improve EasyCall.
+  return loading ? (
+    <LoadingComponent />
+  ) : (
+    <>
+      {error && <ErrorAlert message={error.message} />}
+      {data && <DataViewer data={data} />}
+      <button onClick={() => setToggle((prev) => !prev)}>Toggle Status</button>
+    </>
+  )
+}
+```
 
-- **Bug Reports**: Open an issue for any bugs or issues you encounter.
-- **Feature Requests**: New ideas and suggestions are always welcome.
-- **Development**: Create a pull request with new features or fixes.
+### **The Granular Approach**
 
-> [!NOTE]
-> The `onBeforeRequest` and `onAfterResponse` hooks at the component level are still under development.
+For enthusiasts who prefer an intricate touch, delve into a detailed strategy:
+
+```tsx
+const apiRoutes: ApiRoute[] = [{ endpoint: "/todo", methods: ["Get", "Post"] }];
+
+const callerInstance = createCaller(apiRoutes);
+export callerInstance;
+```
+
+> **Note**: Opting for this method means you forgo the luxuries of the `useCaller` hook and the context store provided by `<CallerProvider />`.
+
+## **🔮 Upcoming Enhancements**
+
+- Robust error management for a smoother UX.
+- Advanced caching strategies to accelerate response times.
+- Comprehensive oversight on request lifecycles.
+
+Stay connected for future updates!
+
+## **🤝 Join the Easycall Movement**
+
+Easycall thrives on community insights. Whether it's identifying bugs, brainstorming features, or enhancing the codebase, your input is invaluable:
+
+- **Report Bugs**: Discover an inconsistency? Report [here](https://github.com/b3hniya/easycall/issues).
+- **Suggest Features**: Conceived an innovation? Share [here](https://github.com/b3hniya/easycall/issues).
+- **Contribute Code**: Modify the repo, submit your enhancements, and create a pull request.
