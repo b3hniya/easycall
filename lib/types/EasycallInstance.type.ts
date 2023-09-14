@@ -1,4 +1,5 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios"
+import { AxiosRequestConfig } from "axios"
+import { OnAfterResponse, OnBeforeRequest, OnError } from "./CallerHooks.type"
 
 export type TokenConfig = {
   field: string
@@ -16,23 +17,15 @@ export type RetryConfig = {
   retryDelay: (retryCount: number) => number
 }
 
-export type OnBeforeRequest = (config: AxiosRequestConfig) => AxiosRequestConfig
-
-export type OnError = (err: any) => any
-
-export type OnAfterResponse = (
-  value: AxiosResponse<any, any>,
-) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>
-
 export type ApiRoute = {
   key: string
   /*
-        it accepts arguments that will be used to replace the endpoint by using the following format: {0}, {1}, {2}, etc...
-        example:
-            endpoint => '/users/{0}/posts/{1}'
-            arguments => ['user_id', 'post_id'] 
-            // NOTE that we pass the argument inside the caller function e.g. caller.usersPost.get(['user_id', 'post_id'])
-            result => '/users/user_id/posts/post_id'
+    it accepts arguments that will be used to replace the endpoint by using the following format: {0}, {1}, {2}, etc...
+    example:
+        endpoint => '/users/{0}/posts/{1}'
+        arguments => ['user_id', 'post_id'] 
+        // NOTE that we pass the argument inside the caller function e.g. caller.usersPost.get(['user_id', 'post_id'])
+        result => '/users/user_id/posts/post_id'
   */
   endpoint: string
   method: "get" | "post" | "put" | "delete" | "patch"

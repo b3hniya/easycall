@@ -1,12 +1,9 @@
 import { apiMethods } from "../constants"
 import { Callers } from "../types/Caller.type"
-import { AxiosInstance, InternalAxiosRequestConfig } from "axios"
+import { AxiosInstance } from "axios"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
 import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
-
-export type AxiosOnBeforeRequest = (
-  conf: InternalAxiosRequestConfig<any>,
-) => InternalAxiosRequestConfig<any>
+import { AxiosOnBeforeRequest } from "../types/CallerHooks.type"
 
 export const generateCallers = (
   callerConfig: EasyCallInstanceConfig,
