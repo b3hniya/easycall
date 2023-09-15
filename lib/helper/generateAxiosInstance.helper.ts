@@ -1,5 +1,5 @@
+import { EasyCallInstanceConfig } from "../types"
 import axios, { AxiosInstance, CreateAxiosDefaults } from "axios"
-import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
 
 const generateAxiosBaseConfig = (config: EasyCallInstanceConfig): CreateAxiosDefaults =>
   config.axiosConfig ?? {

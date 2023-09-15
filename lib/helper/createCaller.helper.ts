@@ -1,15 +1,14 @@
-import { apiMethods } from "../constants"
-import { Callers } from "../types/Caller.type"
 import { AxiosInstance } from "axios"
+import { apiMethods } from "../constants"
+import { APICallers, EasyCallInstanceConfig } from "../types"
+import { AxiosOnBeforeRequest } from "../types/Middlewares.type"
 import { generateAxiosInstance } from "./generateAxiosInstance.helper"
-import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
-import { AxiosOnBeforeRequest } from "../types/CallerHooks.type"
 
 export const generateCallers = (
   callerConfig: EasyCallInstanceConfig,
   axiosInstance: AxiosInstance,
 ) => {
-  const callers: Callers = {}
+  const callers: APICallers = {}
 
   if (callerConfig.apiRoutes) {
     callerConfig.apiRoutes.forEach(({ key, endpoint, method }) => {

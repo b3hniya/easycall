@@ -1,24 +1,24 @@
-import React, { createContext, useCallback } from "react"
-import { EasyCallInstanceConfig } from "../types/EasycallInstance.type"
-import { createCaller } from "../helper/createCaller.helper"
-import { Callers } from "../types/Caller.type"
+import { APICallers } from "../types"
 import { AxiosInstance } from "axios"
+import { EasyCallInstanceConfig } from "../types"
+import React, { createContext, useCallback } from "react"
+import { createCaller } from "../helper/createCaller.helper"
 
 export type CallerContextType = {
   easyCallConfig: EasyCallInstanceConfig
-  callers: Callers
+  callers: APICallers
   axiosInstance: AxiosInstance
 }
 
 export const CallerContext = createContext<CallerContextType>({
-  easyCallConfig: {},
   callers: {},
+  easyCallConfig: {},
   axiosInstance: {} as AxiosInstance,
 })
 
 type CallerProviderProps = {
-  easyCallConfig: EasyCallInstanceConfig
   children?: React.ReactNode
+  easyCallConfig: EasyCallInstanceConfig
 }
 
 export const CallerProvider = (props: CallerProviderProps) => {

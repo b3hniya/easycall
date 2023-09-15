@@ -1,29 +1,12 @@
-export type Params = {
-  args?: string[]
-  queryString?: string
-}
-
-export type Get = <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
-
-export type Post = <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(
-  data: REQUEST_TYPE,
-  params?: Params,
-) => Promise<RESPONSE_TYPE>
-
-export type Put = <REQUEST_TYPE extends unknown, RESPONSE_TYPE extends unknown>(
-  data: REQUEST_TYPE,
-  params?: Params,
-) => Promise<RESPONSE_TYPE>
-
-export type Delete = <RESPONSE_TYPE extends unknown>(params?: Params) => Promise<RESPONSE_TYPE>
+import { DeleteMethod, GetMethod, PostMethod, PutMethod } from "./Methods.type"
 
 export type Caller = {
-  get: Get
-  put: Put
-  post: Post
-  delete: Delete
+  get: GetMethod
+  put: PutMethod
+  post: PostMethod
+  delete: DeleteMethod
 }
 
-export type Callers = {
+export type APICallers = {
   [key: string]: Caller
 }
