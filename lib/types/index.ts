@@ -6,8 +6,9 @@ import {
   EasyCallInstanceConfig,
 } from "./EasycallInstance.type"
 
-import { Callers, Params, Caller } from "./Caller.type"
-import { OnAfterResponse, OnBeforeRequest, OnError } from "./CallerHooks.type"
+import { APICallers, Caller } from "./Caller.type"
+import { OnAfterResponse, OnBeforeRequest, OnError } from "./Middlewares.type"
+import { URLParams } from "./Methods.type"
 
 export {
   TokenConfig,
@@ -18,7 +19,7 @@ export {
   OnAfterResponse,
   ApiRoute,
   EasyCallInstanceConfig,
-  Params,
+  URLParams,
   Caller,
-  Callers,
+  APICallers,
 }

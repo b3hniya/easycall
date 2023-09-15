@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios"
-import { OnAfterResponse, OnBeforeRequest, OnError } from "./CallerHooks.type"
+import { OnAfterResponse, OnBeforeRequest, OnError } from "./Middlewares.type"
 
 export type TokenConfig = {
   field: string
@@ -17,16 +17,13 @@ export type RetryConfig = {
   retryDelay: (retryCount: number) => number
 }
 
+/**
+ * NOTE: the endpoint accepts arguments that will be used to replace the endpoint by using the following format: {0}, {1}, {2}, etc...
+ * example: if the endpoint is: '/users/{0}/posts/{1}' and the arguments are: ['user_id', 'post_id']
+ * the result is going to be like: '/users/user_id/posts/post_id'
+ */
 export type ApiRoute = {
   key: string
-  /*
-    it accepts arguments that will be used to replace the endpoint by using the following format: {0}, {1}, {2}, etc...
-    example:
-        endpoint => '/users/{0}/posts/{1}'
-        arguments => ['user_id', 'post_id'] 
-        // NOTE that we pass the argument inside the caller function e.g. caller.usersPost.get(['user_id', 'post_id'])
-        result => '/users/user_id/posts/post_id'
-  */
   endpoint: string
   method: "get" | "post" | "put" | "delete" | "patch"
 }
@@ -55,6 +52,7 @@ export interface EasyCallInstanceConfig {
   responseDataSchema?: ResponseDataSchema
 
   token?: TokenConfig
+
   // This will get called when the response status is 401 and OnTokenRefresh is defined...
   onTokenRefresh?: () => Promise<void>
 
