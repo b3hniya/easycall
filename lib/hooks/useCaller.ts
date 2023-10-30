@@ -31,7 +31,7 @@ export function useCaller<DATA_TYPE extends unknown = any, RESPONSE_TYPE extends
 ) {
   const [data, setData] = useState<DATA_TYPE>()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<Error | null | undefined>(null)
 
   const { axiosInstance, callers, easyCallConfig } = useContext(CallerContext)
 
@@ -60,5 +60,5 @@ export function useCaller<DATA_TYPE extends unknown = any, RESPONSE_TYPE extends
     if (apiCallOptions.makeInitialCall || apiCallOptions.dependencies) call()
   }, apiCallOptions.dependencies ?? [])
 
-  return { data, error, loading, axiosInstance, easyCallConfig, call }
+  return { data, error, setError, loading, setLoading, axiosInstance, easyCallConfig, call }
 }
