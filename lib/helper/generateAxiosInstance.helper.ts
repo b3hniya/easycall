@@ -9,7 +9,7 @@ const generateAxiosBaseConfig = (config: EasyCallInstanceConfig): CreateAxiosDef
     headers: config.headers,
     timeout: config.timeout,
     responseType: config.responseType,
-    validateStatus: !config.validateStatus ? defaultValidateStatus : config.validateStatus,
+    validateStatus: config.validateStatus ?? defaultValidateStatus,
   }
 
 export const generateAxiosInstance = (config: EasyCallInstanceConfig): AxiosInstance => {
