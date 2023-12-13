@@ -60,5 +60,5 @@ export function useCaller<DATA_TYPE extends unknown = any, RESPONSE_TYPE extends
     if (apiCallOptions.makeInitialCall || apiCallOptions.dependencies) call()
   }, apiCallOptions.dependencies ?? [])
 
-  return { data, error, loading, axiosInstance, easyCallConfig, call }
+  return { data, error, loading, axiosInstance, easyCallConfig, call, setError }
 }
