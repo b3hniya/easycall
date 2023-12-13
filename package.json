@@ -1,6 +1,6 @@
 {
   "name": "easycall",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "easyapi, is a framework to call api and store results painlessly.",
   "keywords": [
     "easycall",
@@ -41,6 +41,7 @@
     "typescript": "^5.1.6"
   },
   "volta": {
-    "node": "18.17.1"
+    "node": "18.17.1",
+    "yarn": "1.22.19"
   }
 }

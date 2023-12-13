@@ -5,6 +5,6 @@ export const useGetCaller = (callerName: string) => {
   const { callers } = useContext(CallerContext)
 
   return {
-    caller: callers[callerName],
+    call: callers[callerName],
   }
 }
