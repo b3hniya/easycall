@@ -2,12 +2,14 @@ import { CallerContext } from "../context/CallerContext"
 import { AxiosInstance, AxiosRequestConfig } from "axios"
 import { useState, useEffect, useContext, useCallback } from "react"
 import { APICallers, OnAfterResponse, OnBeforeRequest } from "../types"
+import { OnAfterResponseError } from "../types/Middlewares.type"
 
 type APICallFunction = (callers: APICallers) => Promise<any>
 
 type APICallOptions = {
   onBeforeRequest?: OnBeforeRequest
   onAfterResponse?: OnAfterResponse
+  onAfterResponseError?: OnAfterResponseError
   dependencies?: any[]
   makeInitialCall?: boolean
 }
@@ -21,6 +23,9 @@ const compositeApplyMiddleWare =
     return apiCallFunction(callers)
       .then((res) => (apiCallOptions.onAfterResponse ? apiCallOptions.onAfterResponse(res) : res))
       .catch((err) => {
+        if (!!apiCallOptions.onAfterResponseError) {
+          apiCallOptions.onAfterResponseError(err)
+        }
         throw err
       })
   }
